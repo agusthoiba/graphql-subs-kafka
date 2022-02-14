@@ -45,7 +45,8 @@ const resolvers = {
         onUserCreated: {
           id: createU.id,
           name: args['input']['name'],
-          status: args['input']['status']
+          status: args['input']['status'],
+          mobile_number: args['input']['mobile_number'],
         }
       }
 

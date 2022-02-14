@@ -22,6 +22,8 @@ npx tsc
 node src/index.js
 ```
 
+Browser client http://localhost:4100/graphql
+
 ### create user
 ```graphql
 mutation createUser($mobileNumber: String!, $name: String!, $address:String) {
@@ -32,8 +34,8 @@ mutation createUser($mobileNumber: String!, $name: String!, $address:String) {
 ```
 ```json
 {
-    "mobileNumber": "+628978799004",
-    "name": "Jhon Anji"
+    "mobile_number": "+628978799004",
+    "name": "Jhon Doe"
 }
 ```
 
@@ -48,6 +50,7 @@ subscription onUserCreated {
   }
 }
 ```
+
 
 
 ## Compatibility
