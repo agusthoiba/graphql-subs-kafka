@@ -4,9 +4,9 @@ Graphql subscription Kafka
 Graphql subscription with kafka example
 
 ## System Requirement
-nodejs 14
-mongodb 4.2
-kafka 7.0.1-ce
+- nodejs 14
+- mongodb 4.2
+- kafka 7.0.1-ce
  
 ## Installation
 ```bash
