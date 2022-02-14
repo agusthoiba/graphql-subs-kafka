@@ -26,8 +26,8 @@ Browser client http://localhost:4100/graphql
 
 ### create user
 ```graphql
-mutation createUser($mobileNumber: String!, $name: String!, $address:String) {
-    createUser(input:{mobile_number: $mobileNumber, name: $name, address: $address}) {
+mutation createUser($mobile_number: String!, $name: String!, $address:String) {
+    createUser(input:{mobile_number: $mobile_number, name: $name, address: $address}) {
         id
     }
 }
