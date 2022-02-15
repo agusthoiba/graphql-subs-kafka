@@ -51,6 +51,16 @@ subscription onUserCreated {
 }
 ```
 
+```graphql
+subscription onUserUpdateStatus {
+  onUserUpdateStatus {
+    id
+    status
+  }
+}
+```
+
+
 
 
 ## Compatibility
