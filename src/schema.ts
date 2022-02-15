@@ -36,8 +36,8 @@ const schem = gql`
   }
 
   type UserUpdateStatusResult {
-    id: ID!
     ok: Boolean!
+    id: ID!
     status: String!
   }
 
@@ -51,11 +51,12 @@ const schem = gql`
 
   type Mutation {
     createUser(input: UserInput!): CreateUserResult!
-    updateStatusUser(input: UserUpdateStatusInput!): UserUpdateStatusResult!
+    updateUserStatus(input: UserUpdateStatusInput!): UserUpdateStatusResult!
   }
 
   type Subscription {
     onUserCreated: User
+    onUserUpdateStatus: User
   }
 `
 

@@ -29,6 +29,12 @@ class Repositories {
         return await result;
     }
 
+    updateUser = async(query, payload: object) => {
+        const coll = this.db.collection('user')
+        const updateU = await coll.updateOne(query, {'$set': payload})
+        return await updateU;
+    }
+
     _transform(rowdb: Object) {
         rowdb['id'] = rowdb['_id'];
         delete rowdb['_id'];
