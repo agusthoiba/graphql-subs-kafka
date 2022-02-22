@@ -17,7 +17,7 @@ const pubsub = new KafkaPubSub({
 
 const CHANNEL_NAMES = {
   USER_CREATED: 'USER_CREATED',
-  USER_UPDATED_STATUS: 'USER_UPDATED_STATUS'
+  USER_STATUS: 'USER_STATUS'
 }
 
 const resolvers = {
@@ -44,7 +44,7 @@ const resolvers = {
       const createU = await repo.createUser(args['input'])
 
       const payloadKafka = {
-        onUserCreated: {
+        onUserStatus: {
           id: createU.id,
           name: args['input']['name'],
           status: args['input']['status'],
@@ -57,8 +57,8 @@ const resolvers = {
       }
       
     
-      await pubsub.subscribe(CHANNEL_NAMES.USER_CREATED, onMessage)
-      await pubsub.publish(CHANNEL_NAMES.USER_CREATED, payloadKafka)
+      await pubsub.subscribe(CHANNEL_NAMES.USER_STATUS, onMessage)
+      await pubsub.publish(CHANNEL_NAMES.USER_STATUS, payloadKafka)
       return createU;
     },
     updateUserStatus: async function (obj, args, context) {
@@ -74,7 +74,7 @@ const resolvers = {
       const updateU = await repo.updateUser(qs, payload)
 
       const payloadKafka = {
-        onUserUpdateStatus: {
+        onUserStatus: {
           id: args['input']['id'],
           status: args['input']['status']
         }
@@ -84,21 +84,21 @@ const resolvers = {
         console.log('payloadKafka - update user', payloadKafka);
       }
       
-      await pubsub.subscribe(CHANNEL_NAMES.USER_UPDATED_STATUS, onMessage)
-      await pubsub.publish(CHANNEL_NAMES.USER_UPDATED_STATUS, payloadKafka)
+      await pubsub.subscribe(CHANNEL_NAMES.USER_STATUS, onMessage)
+      await pubsub.publish(CHANNEL_NAMES.USER_STATUS, payloadKafka)
       return {...args['input'], ok: true};
     }  
   },
   Subscription: {
-    onUserCreated: {
+    /* onUserCreated: {
       // More on pubsub below
      
       subscribe: () => pubsub.asyncIterator(CHANNEL_NAMES.USER_CREATED)
-    },
-    onUserUpdateStatus: {
+    }, */
+    onUserStatus: {
       // More on pubsub below
      
-      subscribe: () => pubsub.asyncIterator(CHANNEL_NAMES.USER_UPDATED_STATUS)
+      subscribe: () => pubsub.asyncIterator(CHANNEL_NAMES.USER_STATUS)
     }
   }
 }

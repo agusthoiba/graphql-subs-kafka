@@ -40,27 +40,15 @@ mutation createUser($mobile_number: String!, $name: String!, $address:String) {
 ```
 
 ### Subcription 
-```graphql
-subscription onUserCreated {
-  onUserCreated {
-    id
-    name
-    mobile_number
-    status
-  }
-}
-```
 
 ```graphql
 subscription onUserUpdateStatus {
-  onUserUpdateStatus {
+  onUserStatus {
     id
     status
   }
 }
 ```
-
-
 
 
 ## Compatibility

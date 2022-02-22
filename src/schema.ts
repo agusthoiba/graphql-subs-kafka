@@ -56,7 +56,7 @@ const schem = gql`
 
   type Subscription {
     onUserCreated: User
-    onUserUpdateStatus: User
+    onUserStatus: User
   }
 `
 
