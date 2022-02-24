@@ -1,3 +1,5 @@
+
+
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { KafkaPubSub } from 'graphql-kafka-subscriptions'
 import { PubSub } from "apollo-server-express";
@@ -5,6 +7,7 @@ import { PubSub } from "apollo-server-express";
 import Repositories from './repositories';
 import typeDefs from './schema';
 import status from './constant';
+// import Container from 'typedi';
 
 import { ObjectId } from 'mongodb';
 
@@ -29,8 +32,6 @@ const resolvers = {
   // action here such as query db
   Query: {
     users: async function (obj, args, context) { 
-      console.log('oactx', context)
-      console.log('oactx-db', context.db)
       const repo = new Repositories(context.db)
       const findU = await repo.findUser()
       // console.log(findU)
@@ -62,7 +63,6 @@ const resolvers = {
       return createU;
     },
     updateUserStatus: async function (obj, args, context) {
-      console.log('args', args)
       const repo = new Repositories(context.db)
       if (!Object.values(status).includes(args['input']['status'])) {
         throw new Error("Status Not Allowed")

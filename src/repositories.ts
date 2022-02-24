@@ -1,15 +1,17 @@
 
+import { Service } from "typedi";
+import Db from "./db";
 
+@Service()
 class Repositories {
-    db;
 
-    constructor(db) {
-        this.db = db
-    }
+    constructor(private readonly db: Db) {}
 
     findUser = async() => {
-        const coll = this.db.collection('user')
+        const coll = this.db.obj.collection('user')
+
         const findU = await coll.find().toArray()
+
         findU.map(row => {
             return this._transform(row)
         })
@@ -18,9 +20,8 @@ class Repositories {
     }
 
     createUser = async(payload: Object) => {
-        const coll = this.db.collection('user')
+        const coll = this.db.obj.collection('user')
         const createU = await coll.insertOne(payload)
-        console.log('createU repo', createU)
         createU['id'] = String(createU.insertedId);
         delete createU['_id'];
         const result = {
@@ -30,7 +31,8 @@ class Repositories {
     }
 
     updateUser = async(query, payload: object) => {
-        const coll = this.db.collection('user')
+        console.log('this', this)
+        const coll = this.db.obj.collection('user')
         const updateU = await coll.updateOne(query, {'$set': payload})
         return await updateU;
     }

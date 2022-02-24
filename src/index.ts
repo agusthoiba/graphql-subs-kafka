@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import 'reflect-metadata';
+
 // require('dotenv').config();
 
 import { createServer } from "http";
@@ -6,9 +8,12 @@ import { execute, subscribe,  } from "graphql";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import express from "express";
+import Container from 'typedi';
 import { ApolloServer, PubSub,  } from "apollo-server-express";
 import { KafkaPubSub } from 'graphql-kafka-subscriptions'
-import { getDB } from './db'
+import Db from './db'
+import { MongoClient } from 'mongodb';
+import * as mongodb from 'mongodb';
 
 
 import schema from './resolver';
@@ -25,10 +30,15 @@ import schema from './resolver';
     port: '9092',
     globalConfig: {} // options passed directly to the consumer and producer
   }); */
-  const db = await getDB(process.env.MONGODB_URI, process.env.MONGODB_NAME);
 
+  // console.log('MongoClient', MongoClient)
+  console.log('mongodb before', mongodb)
+  const mongoClient = new MongoClient(process.env.MONGODB_URI)
+  const dbcls = new Db(mongoClient)
+  await dbcls.connect(process.env.MONGODB_NAME);
+  // const db = {};
   const context = {
-    db: db
+    db: dbcls
     // pubsub: new PubSub()
   }
 
